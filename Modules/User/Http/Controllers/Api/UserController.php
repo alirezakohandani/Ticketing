@@ -1,20 +1,24 @@
 <?php
 
-namespace Modules\User\Http\Controllers;
+namespace Modules\User\Http\Controllers\Api;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\User;
+use Modules\User\Transformers\UserCollection;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Renderable
+     * Display a listing of the users.
+     * @return json
      */
+
     public function index()
     {
-        return view('user::index');
+        $users = User::all();
+        return response()->json(new UserCollection($users));
     }
 
     /**
