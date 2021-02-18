@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Ticketing\Http\Controllers\TicketingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/ticketing', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1'], function () { 
+    Route::post('/tickets', [TicketingController::class, 'store']); 
 });

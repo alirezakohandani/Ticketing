@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'type', 'status'];
+    protected $fillable = ['user_id', 'ref_number', 'type', 'status'];
     
     /**
      * Get the messages for the ticket.

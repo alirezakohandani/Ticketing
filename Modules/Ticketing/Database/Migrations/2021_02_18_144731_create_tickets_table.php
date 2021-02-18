@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('ref_number');
             $table->enum('type', ['immediate', 'normal', 'nonsignificant']);
-            $table->enum('staus', ['pending', 'anwserd', 'finished']);
+            $table->enum('status', ['pending', 'anwserd', 'finished']);
             $table->timestamps();
         });
     }

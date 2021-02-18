@@ -9,14 +9,14 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['user_id', 'title', 'description'];
     
     /**
      * Get the ticket that owns the message.
      */
     public function ticket()
     {
-        return $this->belongsTo(Ticket::class)
+        return $this->belongsTo(Ticket::class);
     }
     protected static function newFactory()
     {
