@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-use Modules\User\Http\Controllers\Api\UserController;
+use Modules\User\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
