@@ -5,9 +5,17 @@ namespace Modules\Ticketing\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Ticketing\Services\Ticket\Ticket;
 
 class TicketingController extends Controller
 {
+
+    private $ticket;
+
+    public function __construct(Ticket $ticket)
+    {
+        $this->ticket = $ticket;
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -33,7 +41,11 @@ class TicketingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $ref_number = $this->ticket->store($request);
+       return response()->json([
+        'ref_number' => $ref_number,
+        'status' => 200,
+       ]); 
     }
 
     /**
