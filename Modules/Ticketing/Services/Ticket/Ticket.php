@@ -7,6 +7,22 @@ use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 
 class Ticket
 {
+    /**
+     * Ticket variable
+     *
+     * @var [type]
+     */
+    private $ticket;
+
+    /**
+     * Set ticket
+     *
+     * @param EntitiesTicket $ticket
+     */
+    public function __construct(EntitiesTicket $ticket)
+    {
+        $this->ticket = $ticket;
+    }
 
     /**
      * Store Ticket
@@ -16,15 +32,15 @@ class Ticket
      */
     public function store(Request $request)
     {
+            $id = $this->ticket->register($request->email); 
             $ticket = EntitiesTicket::create([
-                'user_id' => 1,
+                'user_id' => $id,
                 'ref_number' => 1234,
                 'type' => $request->type,
                 'status' => 'pending',
             ]);
-    
+               
             $this->setMessage($request, $ticket);
-
             return $ticket->ref_number;
     }
 
@@ -38,7 +54,7 @@ class Ticket
     protected function setMessage(Request $request, EntitiesTicket $ticket)
     {
         $ticket->messages()->create([
-            'user_id' => 1,
+            'user_id' => $ticket->user_id,
             'title' => $request->title,
             'description' => $request->description,
         ]);
