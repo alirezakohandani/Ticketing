@@ -1,24 +1,20 @@
 <?php
 
-namespace Modules\User\Http\Controllers;
+namespace Modules\Ticketing\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\User\Entities\User;
-use Modules\User\Transformers\UserCollection;
 
-class UserController extends Controller
+class TicketingController extends Controller
 {
     /**
-     * Display a listing of the users.
-     * @return json
+     * Display a listing of the resource.
+     * @return Renderable
      */
-
     public function index()
     {
-        $users = User::all();
-        return response()->json(new UserCollection($users));
+        return view('ticketing::index');
     }
 
     /**
@@ -27,7 +23,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        return view('ticketing::create');
     }
 
     /**
@@ -47,7 +43,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user::show');
+        return view('ticketing::show');
     }
 
     /**
@@ -57,7 +53,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('user::edit');
+        return view('ticketing::edit');
     }
 
     /**
