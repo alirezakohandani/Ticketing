@@ -20,6 +20,9 @@ class Ticket extends Model
         return $this->hasMany(Message::class);
     }
 
+    /**
+     * Get the user that owns the ticket.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

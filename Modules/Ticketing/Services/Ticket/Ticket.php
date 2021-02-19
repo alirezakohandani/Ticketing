@@ -35,7 +35,7 @@ class Ticket
             $id = $this->ticket->register($request->email); 
             $ticket = EntitiesTicket::create([
                 'user_id' => $id,
-                'ref_number' => 1234,
+                'ref_number' => $this->generateRefNumber(),
                 'type' => $request->type,
                 'status' => 'pending',
             ]);
@@ -60,5 +60,19 @@ class Ticket
         ]);
         
     }
+
+    /**
+     * Generates ref_number which is not in the table
+     *
+     * @return int
+     */
+    protected function generateRefNumber()
+    {
+        do {
+            $ref_number = rand(100000, 999999);
+        } while (EntitiesTicket::where('ref_number', $ref_number)->exists());
+
+        return $ref_number; 
+    }   
 
 }
