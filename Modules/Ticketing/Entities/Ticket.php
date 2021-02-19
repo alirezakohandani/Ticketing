@@ -11,6 +11,16 @@ class Ticket extends Model
     use HasFactory;
 
     protected $fillable = ['user_id', 'ref_number', 'type', 'status'];
+
+    /**
+     * Get the route key for the ticket.
+     *
+     * @return int
+     */
+    public function getRouteKeyName()
+    {
+        return 'ref_number';
+    }
     
     /**
      * Get the messages for the ticket.

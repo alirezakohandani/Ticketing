@@ -5,6 +5,7 @@ namespace Modules\Ticketing\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Services\Ticket\Ticket;
 
 class TicketingController extends Controller
@@ -53,9 +54,9 @@ class TicketingController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
+    public function show(EntitiesTicket $ticket)
     {
-        return view('ticketing::show');
+        return $this->ticket->show($ticket);
     }
 
     /**
