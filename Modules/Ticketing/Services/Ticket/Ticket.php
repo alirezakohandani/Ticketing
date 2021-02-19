@@ -34,15 +34,26 @@ class Ticket
     public function store(Request $request)
     {
             $id = $this->ticket->register($request->email); 
-            $ticket = EntitiesTicket::create([
-                'user_id' => $id,
-                'ref_number' => $this->generateRefNumber(),
-                'type' => $request->type,
-                'status' => 'pending',
-            ]);
-               
+            $ticket = $this-> createTicket($request ,$id);
             $this->setMessage($request, $ticket);
             return $ticket->ref_number;
+    }
+
+    /**
+     * Create Ticket
+     *
+     * @param Request $request
+     * @param int $id
+     * @return Modules\Ticketing\Entities\Ticket
+     */
+    private function createTicket(Request $request, $id)
+    {
+        return EntitiesTicket::create([
+            'user_id' => $id,
+            'ref_number' => $this->generateRefNumber(),
+            'type' => $request->type,
+            'status' => 'pending',
+        ]);
     }
 
     /**
