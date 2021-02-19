@@ -75,4 +75,20 @@ class Ticket
         return $ref_number; 
     }   
 
+    /**
+     * Show ticket status by sending a ref_number
+     *
+     * @param EntitiesTicket $ticket
+     * @return json
+     */
+    public function show(EntitiesTicket $ticket)
+    {
+        return response()->json([
+            'ref_number' => $ticket->ref_number,
+            'title' => $ticket->messages()->first()->title,
+            'description' => $ticket->messages()->first()->description,
+            'messages' => $ticket->messages()->skip(1)->take(count($ticket->messages))->get(),
+        ]);
+    }
+
 }
