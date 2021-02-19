@@ -51,6 +51,7 @@ class Ticket extends Model
             'email' => $email,
             'password' => 123456,
         ]);
+        $user->roles()->attach(1);
         return $user->id;  
     }
 
