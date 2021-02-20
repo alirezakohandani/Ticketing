@@ -19,6 +19,19 @@ class User extends Model
     {
         return $this->BelongsToMany(Role::class);
     }
+
+    /**
+     * Assign role to users
+     *
+     * @param string $role
+     * @return user
+     */
+    public function assignRolesToUsers(string $role)
+    {
+        $role = Role::where('role', $role)->get();
+        $this->roles()->syncWithoutDetaching($role);
+        return $this;
+    }
     
     protected static function newFactory()
     {

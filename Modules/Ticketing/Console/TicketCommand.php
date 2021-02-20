@@ -22,7 +22,7 @@ class TicketCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create tickets';
+    protected $description = 'create as many tickets as you want';
 
     /**
      * Create a new command instance.
