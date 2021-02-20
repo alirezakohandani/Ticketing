@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\User\Http\Controllers\Admin\AdminController;
 use Modules\User\Http\Controllers\UserController;
 
 /*
@@ -15,5 +16,9 @@ use Modules\User\Http\Controllers\UserController;
 */
 
 Route::group(['prefix' => 'v1'], function() {
-    Route::get("/users.json",[UserController::class, 'index']);
+    Route::get('/users.json', [UserController::class, 'index']);
 }); 
+
+Route::group(['prefix' => 'v1/admin'], function() {
+    Route::post('/add/role', [AdminController::class, 'store']);
+});
