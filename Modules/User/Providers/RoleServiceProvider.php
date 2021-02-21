@@ -18,16 +18,6 @@ class RoleServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-       
-    }
-
     public function boot()
     {
         $roles = Role::all();
