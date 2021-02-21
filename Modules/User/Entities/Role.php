@@ -27,7 +27,19 @@ class Role extends Model
         return $this->belongsToMany(Permission::class);
     }
 
-    
+    /**
+     * Assign permission to roles
+     *
+     * @param string $pormission
+     * @return role
+     */
+    public function assignPermissionToRoles(string $permission)
+    {
+        $permission = Permission::where('name', $permission)->get();
+        $this->permissions()->syncWithoutDetaching($permission);
+        return $this;
+    }
+
     protected static function newFactory()
     {
         return \Modules\User\Database\factories\RoleFactory::new();

@@ -20,5 +20,6 @@ Route::group(['prefix' => 'v1'], function() {
 }); 
 
 Route::group(['prefix' => 'v1/admin'], function() {
-    Route::post('/add/role', [AdminController::class, 'store']);
+    Route::post('/add/role', [AdminController::class, 'storeRole']);
+    Route::post('/add/permission', [AdminController::class, 'storePermission']);
 });
