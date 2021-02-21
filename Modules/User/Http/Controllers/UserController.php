@@ -11,6 +11,9 @@ use Modules\User\Transformers\UserCollection;
 class UserController extends Controller
 {
 
+    /**
+     * Set auth middleware
+     */
     public function __construct()
     {
         $this->middleware('auth:api');

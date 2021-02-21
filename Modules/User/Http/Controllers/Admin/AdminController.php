@@ -15,6 +15,13 @@ class AdminController extends Controller
 {
 
     /**
+     * Set user authentication
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+    /**
      * Attribute the role to the user
      * @param Request $request
      * @return json
