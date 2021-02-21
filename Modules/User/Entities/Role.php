@@ -18,6 +18,15 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    /**
+     * the permissions that belong to the role
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
     
     protected static function newFactory()
     {
