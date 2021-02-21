@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
 
     /**
-     * Set user authentication
+     * Set auth middleware
      */
     public function __construct()
     {

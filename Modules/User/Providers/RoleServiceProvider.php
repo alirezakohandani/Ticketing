@@ -2,7 +2,7 @@
 
 namespace Modules\User\Providers;
 
-use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Modules\User\Entities\Role;
 
@@ -25,9 +25,14 @@ class RoleServiceProvider extends ServiceProvider
      */
     public function provides()
     {
+       
+    }
+
+    public function boot()
+    {
         $roles = Role::all();
-        foreach ($roles as $key => $role) {
-            Gate::define($role->role, function($user) use($role) {
+        foreach ($roles as $role) {
+            Gate::define($role->role, function ($user) use ($role) {
                 return $user->roles->contains('role', $role->role );
             });
         }
