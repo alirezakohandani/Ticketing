@@ -5,6 +5,7 @@ namespace Modules\User\Http\Controllers\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\User\Entities\Role;
 use Modules\User\Entities\User;
 use Modules\User\Transformers\Admin\AdminStorePermissionResource;

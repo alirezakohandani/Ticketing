@@ -11,6 +11,14 @@ class Permission extends Model
 
     protected $fillable = [];
     
+    /**
+     * the roles that belong to the permission
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+    
     protected static function newFactory()
     {
         return \Modules\User\Database\factories\PermissionFactory::new();
