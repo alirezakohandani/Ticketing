@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json([
                 "status" => 400,
-                "developerMessage" => 'username or password was wrong',
+                "developerMessage" => trans('user::errors.username_password_wrong'),
             ]);
         }
 
@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'Successfully logged out'
+            'message' => trans('user::successes.logged_out'),
             ]);
     }
 
