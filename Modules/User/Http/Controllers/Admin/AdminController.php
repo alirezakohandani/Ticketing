@@ -5,79 +5,37 @@ namespace Modules\User\Http\Controllers\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\User\Entities\Role;
 use Modules\User\Entities\User;
-use Modules\User\Transformers\Admin\AdminStoreResource;
+use Modules\User\Transformers\Admin\AdminStorePermissionResource;
+use Modules\User\Transformers\Admin\AdminStoreRoleResource;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
-    {
-        return view('user::index');
-    }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('user::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Attribute the role to the user
      * @param Request $request
      * @return json
      */
-    public function store(Request $request)
+    public function storeRole(Request $request)
     {
         $user = User::where('email', $request->email)->first();
         $user->assignRolesToUsers($request->role);
-        return response()->json(new AdminStoreResource($user));
+        return response()->json(new AdminStoreRoleResource($user));
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('user::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('user::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Attribute the permission to the role
+     *
      * @param Request $request
-     * @param int $id
-     * @return Renderable
+     * @return json
      */
-    public function update(Request $request, $id)
+    public function storePermission(Request $request)
     {
-        //
+        $role = Role::where('role', $request->role)->first();
+        $role->assignPermissionToRoles($request->permission);
+        return response()->json(new AdminStorePermissionResource($role));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

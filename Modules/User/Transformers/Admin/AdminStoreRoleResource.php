@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\User\Transformers;
+namespace Modules\User\Transformers\Admin;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class AdminStoreRoleResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,9 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
-            'fullname' => $this->name,
-            'email' => $this->email,
-            //To Do
-            'roles' => $this['roles'],
+            'status' => 200,
+            'developerMessage' => 'The desired role was added about the user',
         ];
     }
-}    
+}
