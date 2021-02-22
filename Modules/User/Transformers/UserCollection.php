@@ -19,6 +19,8 @@ class UserCollection extends ResourceCollection
        'metadata' => [
            'resultset' => [
                'count' => $this->count(),
+               'last_page' => $this->lastPage(),
+                'per_page' => $this->perPage(),
            ],
        ],
         ];
