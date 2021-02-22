@@ -23,4 +23,15 @@ class TicketingController extends Controller
     {
        return $this->ticket->index();
     }
+
+    /**
+     * Changes the ticket status
+     *
+     * @param Request $request
+     * @return json
+     */
+    public function update(Request $request)
+    {
+        return $this->ticket->update($request);
+    }
 }
