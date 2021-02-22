@@ -21,12 +21,13 @@ class PermissionServiceProvider extends ServiceProvider
             foreach ($permissions as $permission) {
                 Gate::define($permission->name, function($user) use ($permission) {
                     foreach($user->roles as  $role){
-                        if ($role->permissions->contains('name', $permission->name)) {
+                        if ($role->permissions->contains('name', $permission->name)) 
+                        {
                             return true;
-                         }
+                        }
                             return false;
                     }
                 }); 
-        }
+            }
     }
 }

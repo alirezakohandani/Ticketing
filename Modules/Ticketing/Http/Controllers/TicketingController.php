@@ -19,7 +19,7 @@ class TicketingController extends Controller
         $this->ticket = $ticket;
     }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the tickets for logged in users.
      * @return Renderable
      */
     public function index()
