@@ -43,8 +43,8 @@ class Ticket
      */
     public function update(Request $request)
     {
-        $this->validation($request);
         if (\Gate::allows('response tickets')) {
+            $this->validation($request);
             $ticket = $this->getTicket($request->ref_number); 
             $ticket = $ticket->update([
                 'type' => $request->type,
@@ -54,7 +54,7 @@ class Ticket
     }
 
     /**
-     * Undocumented function
+     * Request Validation
      *
      * @param Request $request
      * @return void
