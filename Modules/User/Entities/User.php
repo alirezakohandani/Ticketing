@@ -9,6 +9,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use function PHPSTORM_META\map;
+
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
@@ -21,6 +23,24 @@ class User extends Authenticatable implements JWTSubject
     public function roles()
     {
         return $this->BelongsToMany(Role::class);
+    }
+
+    /**
+     * Checks that the user has the necessary permission.
+     *
+     * @param [array] ...$permissions
+     * @return boolean
+     */
+    public function hasPermission(...$permissions)
+    {
+        foreach ($this->roles as $role) {
+            foreach ($permissions as $permission) {
+                if ($role->permissions->contains('name', $permission)) {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 
     /**
