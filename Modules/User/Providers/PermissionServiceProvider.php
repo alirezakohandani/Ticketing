@@ -17,17 +17,16 @@ class PermissionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $user = auth()->user();
         $permissions = Permission::all();
-
-        foreach($user->roles as $role)
             foreach ($permissions as $permission) {
-                Gate::define($permission->name, function () use ($permission, $role) {
-                    if ($role->permissions->contains('name', $permission->name)) {
-                       return true;
+                Gate::define($permission->name, function($user) use ($permission) {
+                    foreach($user->roles as  $role){
+                        if ($role->permissions->contains('name', $permission->name)) {
+                            return true;
+                         }
+                            return false;
                     }
-                       return false;
-                });
-            }
+                }); 
+        }
     }
 }
