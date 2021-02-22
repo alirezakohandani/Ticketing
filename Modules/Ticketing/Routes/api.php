@@ -21,4 +21,5 @@ Route::group(['prefix' => 'v1'], function () {
 
 Route::group(['prefix' => 'v1/admin'], function () { 
     Route::get('/tickets', [Modules\Ticketing\Http\Controllers\Admin\TicketingController::class, 'index']); 
+    Route::post('ticket/change/type', [Modules\Ticketing\Http\Controllers\Admin\TicketingController::class, 'update']);
 });
