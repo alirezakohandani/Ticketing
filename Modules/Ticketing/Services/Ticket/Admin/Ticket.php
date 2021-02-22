@@ -32,7 +32,7 @@ class Ticket
      */
     private function ticketWithPendingStatus()
     {
-        return EntitiesTicket::where('status', 'pending')->get();
+        return EntitiesTicket::where('status', 'pending')->paginate(10);
     }
 
     /**

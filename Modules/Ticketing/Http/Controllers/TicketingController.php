@@ -25,7 +25,7 @@ class TicketingController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $tickets = EntitiesTicket::where('user_id', $user->id)->get();
+        $tickets = EntitiesTicket::where('user_id', $user->id)->paginate(10);
         return response()->json(new TicketIndexCollection($tickets));
     }
 

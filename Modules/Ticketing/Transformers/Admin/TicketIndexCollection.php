@@ -18,7 +18,9 @@ class TicketIndexCollection extends ResourceCollection
             'tickets' => TicketIndexResource::collection($this->collection),
             'metadata' => [
                 'resultset' => [
-                    'count' => $this->count(),
+                    'count' => $this->total(),
+                    'last_page' => $this->lastPage(),
+                    'per_page' => $this->perPage(),
                     ],
                 ],
              ];
