@@ -18,11 +18,6 @@ class MessageShowResource extends JsonResource
             'owner' => $this->user->name,
             'description' => $this->description,
             'created' => $this->created_at,
-            'metadata' => [
-                'resultset' => [
-                    'count' => $this->count(),
-                ],
-            ],
         ];
         
     }
