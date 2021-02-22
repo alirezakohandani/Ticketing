@@ -2,8 +2,10 @@
 
 namespace Modules\Ticketing\Services\Ticket\Admin;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
+use Modules\Ticketing\Rules\type;
 use Modules\Ticketing\Transformers\Admin\TicketIndexCollection;
 use Modules\Ticketing\Transformers\Front\MessageShowResource;
 use Modules\Ticketing\Transformers\TicketUpdateResource;
@@ -41,6 +43,7 @@ class Ticket
      */
     public function update(Request $request)
     {
+        $this->validation($request);
         if (\Gate::allows('response tickets')) {
             $ticket = $this->getTicket($request->ref_number); 
             $ticket = $ticket->update([
@@ -50,6 +53,19 @@ class Ticket
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function validation(Request $request)
+    {
+        $request->validate([
+            'ref_number' => ['required:api', 'integer:api'],
+            'type' => ['required:api', 'string:api', new type($request)],
+        ]);
+    }
     /**
      * Returns specific ticket based on ref_number
      *
