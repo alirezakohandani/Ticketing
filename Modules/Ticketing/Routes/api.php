@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Modules\Ticketing\Http\Controllers\TicketingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +14,11 @@ use Modules\Ticketing\Http\Controllers\TicketingController;
 */
 
 Route::group(['prefix' => 'v1'], function () { 
-    Route::get('/tickets', [TicketingController::class, 'index']);
-    Route::post('/tickets', [TicketingController::class, 'store']);
-    Route::get('/tickets/{ticket:ref_number}', [TicketingController::class, 'show']); 
+    Route::get('/tickets', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'index']);
+    Route::post('/tickets', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'store']);
+    Route::get('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'show']); 
+});
+
+Route::group(['prefix' => 'v1/admin'], function () { 
+    Route::get('/tickets', [Modules\Ticketing\Http\Controllers\Admin\TicketingController::class, 'index']); 
 });
