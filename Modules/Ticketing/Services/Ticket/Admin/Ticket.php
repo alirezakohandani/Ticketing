@@ -41,7 +41,7 @@ class Ticket
      */
     public function update(Request $request)
     {
-        if (\Gate::allows('see tickets')) {
+        if (\Gate::allows('response tickets')) {
             $ticket = $this->getTicket($request->ref_number); 
             $ticket = $ticket->update([
                 'type' => $request->type,
