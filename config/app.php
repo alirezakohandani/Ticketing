@@ -176,7 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Modules\User\Providers\RoleServiceProvider::class,
-
+        Modules\User\Providers\PermissionServiceProvider::class,
     ],
 
     /*
