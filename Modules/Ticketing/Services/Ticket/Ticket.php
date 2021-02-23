@@ -4,7 +4,9 @@ namespace Modules\Ticketing\Services\Ticket;
 
 use Illuminate\Http\Request;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
+use Modules\Ticketing\Events\TicketCreated;
 use Modules\Ticketing\Transformers\Front\MessageShowResource;
+use Modules\User\Entities\User;
 
 class Ticket
 {
@@ -36,7 +38,22 @@ class Ticket
             $id = $this->ticket->register($request->email); 
             $ticket = $this-> createTicket($request ,$id);
             $this->setMessage($request, $ticket);
+            $this->getAllUsers()->map(function($user) use($ticket) {
+                if ($user->hasPermission('response tickets')) {
+                    event(new TicketCreated($ticket, $user));
+                }
+            });
             return $ticket->ref_number;
+    }
+
+    /**
+     * Return usrs
+     *
+     * @return collection
+     */
+    private function getAllUsers()
+    {
+        return User::all();
     }
 
     /**
