@@ -67,6 +67,17 @@ class Ticket extends Model
         $this->save();
     }
 
+    /**
+     * Finish status
+     *
+     * @return void
+     */
+    public function finishedStatus()
+    {
+        $this->status = 'finished';
+        $this->save();
+    }
+
     protected static function newFactory()
     {
         return \Modules\Ticketing\Database\factories\TicketFactory::new();

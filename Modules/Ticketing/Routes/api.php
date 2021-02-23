@@ -23,5 +23,6 @@ Route::group(['prefix' => 'v1'], function () {
 Route::group(['prefix' => 'v1/admin'], function () { 
     Route::get('/tickets', [Modules\Ticketing\Http\Controllers\Admin\TicketingController::class, 'index']); 
     Route::post('ticket/change/type', [Modules\Ticketing\Http\Controllers\Admin\TicketingController::class, 'update']);
+    Route::post('tickets/{ticket:ref_number}/close', [Modules\Ticketing\Http\Controllers\Admin\TicketingController::class, 'close']);
     Route::post('tickets/{ticket:ref_number}/reply', [ReplyController::class, 'store']);
 });

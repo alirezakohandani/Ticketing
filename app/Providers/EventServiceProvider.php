@@ -8,8 +8,10 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use Modules\Ticketing\Events\ReplyCreated;
 use Modules\Ticketing\Events\TicketCreated;
+use Modules\Ticketing\Events\TicketFinished;
 use Modules\Ticketing\Listeners\SendEmail;
 use Modules\Ticketing\Listeners\ticketChangeStatus;
+use Modules\Ticketing\Listeners\ticketFinishedStatus;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         ReplyCreated::class => [
             ticketChangeStatus::class,
+        ],
+        TicketFinished::class => [
+            ticketFinishedStatus::class,
         ],
     ];
 
