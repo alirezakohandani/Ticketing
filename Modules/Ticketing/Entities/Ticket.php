@@ -56,6 +56,17 @@ class Ticket extends Model
         return $user->id;  
     }
 
+    /**
+     * Change status
+     *
+     * @return void
+     */
+    public function replied()
+    {
+        $this->status = 'anwserd';
+        $this->save();
+    }
+
     protected static function newFactory()
     {
         return \Modules\Ticketing\Database\factories\TicketFactory::new();
