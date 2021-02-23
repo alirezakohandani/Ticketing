@@ -17,7 +17,7 @@ class MessageShowResource extends JsonResource
         return [
             'owner' => $this->user->name,
             'description' => $this->description,
-            'created' => $this->created_at,
+            'created' => $this->created,
         ];
         
     }

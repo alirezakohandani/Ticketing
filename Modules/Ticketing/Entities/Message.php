@@ -4,11 +4,12 @@ namespace Modules\Ticketing\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Ticketing\Traits\Createdat;
 use Modules\User\Entities\User;
 
 class Message extends Model
 {
-    use HasFactory;
+    use HasFactory, Createdat;
 
     protected $fillable = ['user_id', 'title', 'description'];
     
@@ -32,4 +33,5 @@ class Message extends Model
     {
         return \Modules\Ticketing\Database\factories\MessageFactory::new();
     }
+
 }

@@ -20,6 +20,7 @@ class TicketIndexResource extends JsonResource
             'status' => $this->status,
             'title' => $this->messages->first()->title,
             'description' => $this->messages->first()->description,
+            'created' => $this->created, 
             'messages' => MessageShowResource::collection($this->messages()
                                                                ->skip(1)
                                                                ->take(count($this->messages))

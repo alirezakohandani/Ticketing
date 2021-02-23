@@ -29,7 +29,7 @@ class ReplyResource extends JsonResource
                                                   ->name,
                 'title' => $this->title,
                 'description' => $this->description,
-                'created' => $this->created_at,
+                'created' => $this->created,
             ],
         ];
     }

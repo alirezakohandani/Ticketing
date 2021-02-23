@@ -4,11 +4,12 @@ namespace Modules\Ticketing\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Ticketing\Traits\Createdat;
 use Modules\User\Entities\User;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, Createdat;
 
     protected $fillable = ['user_id', 'ref_number', 'type', 'status'];
 
