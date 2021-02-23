@@ -5,7 +5,10 @@ namespace Modules\Ticketing\Http\Controllers\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
+use Modules\Ticketing\Events\TicketFinished;
 use Modules\Ticketing\Services\Ticket\Admin\Ticket;
+use Modules\Ticketing\Transformers\Admin\TicketFinishResource;
 
 class TicketingController extends Controller
 {
@@ -33,5 +36,17 @@ class TicketingController extends Controller
     public function update(Request $request)
     {
         return $this->ticket->update($request);
+    }
+
+    /**
+     * Close ticket
+     *
+     * @param EntitiesTicket $ticket
+     * @return json
+     */
+    public function close(EntitiesTicket $ticket)
+    {
+        event(new TicketFinished($ticket));
+        return response()->json(new TicketFinishResource($ticket));
     }
 }

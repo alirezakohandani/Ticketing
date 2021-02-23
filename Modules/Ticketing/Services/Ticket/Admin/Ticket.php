@@ -20,7 +20,7 @@ class Ticket
      */
     public function index()
     {
-        if (!Gate::allows('see tickets')) 
+        if (!Gate::allows('see tickets', 'finished tickets'));
         {
             return response()->json(new TicketResource(auth()->user())); 
         }
