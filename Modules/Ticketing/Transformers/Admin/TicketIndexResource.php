@@ -20,6 +20,7 @@ class TicketIndexResource extends JsonResource
             'status' => $this->status,
             'title' => $this->messages->take(1)->first()->title ?? '',
             'description' => $this->messages->take(1)->first()->description ?? '',
+            'created' => $this->created,
         ];
     }
 }
