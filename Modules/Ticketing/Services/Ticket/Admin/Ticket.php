@@ -2,12 +2,13 @@
 
 namespace Modules\Ticketing\Services\Ticket\Admin;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Rules\type;
+use Modules\Ticketing\Transformers\Admin\Errors\TicketResource;
 use Modules\Ticketing\Transformers\Admin\TicketIndexCollection;
-use Modules\Ticketing\Transformers\Front\MessageShowResource;
 use Modules\Ticketing\Transformers\TicketUpdateResource;
 
 class Ticket
@@ -19,10 +20,12 @@ class Ticket
      */
     public function index()
     {
-        if (\Gate::allows('see tickets')) {
-            $tickets = $this->ticketWithPendingStatus();
-            return response()->json(new TicketIndexCollection($tickets));
+        if (!Gate::allows('see tickets')) 
+        {
+            return response()->json(new TicketResource(auth()->user())); 
         }
+        $tickets = $this->ticketWithPendingStatus();
+        return response()->json(new TicketIndexCollection($tickets));
     }
 
     /**
@@ -43,14 +46,16 @@ class Ticket
      */
     public function update(Request $request)
     {
-        if (\Gate::allows('response tickets')) {
-            $this->validation($request);
-            $ticket = $this->getTicket($request->ref_number); 
-            $ticket = $ticket->update([
-                'type' => $request->type,
-            ]);
-            return response()->json(new TicketUpdateResource($ticket));
+        if (!Gate::allows('response tickets')) 
+        {
+            return response()->json(new TicketResource(auth()->user()));
         }
+        $this->validation($request);
+        $ticket = $this->getTicket($request->ref_number); 
+        $ticket = $ticket->update([
+            'type' => $request->type,
+        ]);
+        return response()->json(new TicketUpdateResource($ticket));
     }
 
     /**
