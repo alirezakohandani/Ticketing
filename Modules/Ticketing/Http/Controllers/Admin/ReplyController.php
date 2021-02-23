@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Ticketing\Entities\Ticket;
+use Modules\Ticketing\Events\ReplyCreated;
 use Modules\Ticketing\Transformers\Admin\Errors\TicketResource;
 use Modules\Ticketing\Transformers\Admin\Reply\ReplyResource;
 
@@ -32,6 +33,7 @@ class ReplyController extends Controller
             return response()->json(new TicketResource(auth()->user()));
         }
         $message = $this->createMessage($ticket, $request);
+        event(new ReplyCreated($message, auth()->user()));
         return response()->json(new ReplyResource($message));
     }
 

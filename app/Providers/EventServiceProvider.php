@@ -6,8 +6,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Modules\Ticketing\Events\ReplyCreated;
 use Modules\Ticketing\Events\TicketCreated;
 use Modules\Ticketing\Listeners\SendEmail;
+use Modules\Ticketing\Listeners\ticketChangeStatus;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TicketCreated::class => [
             SendEmail::class,
+        ],
+        ReplyCreated::class => [
+            ticketChangeStatus::class,
         ],
     ];
 
