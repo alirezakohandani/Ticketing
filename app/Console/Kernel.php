@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \Modules\Ticketing\Console\TicketCommand::class,
+        \Modules\Ticketing\Console\TicketFinishCommand::class,
     ];
 
     /**
