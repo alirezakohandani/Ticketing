@@ -3,6 +3,7 @@
 namespace Modules\Ticketing\Services\Notification;
 
 use Illuminate\Support\Facades\Mail;
+use Modules\Ticketing\Jobs\SendEmail;
 use Modules\Ticketing\Services\Notification\Contract\Notification;
 
 class Email implements Notification
@@ -38,6 +39,6 @@ class Email implements Notification
     public function send()
     {
         $mailable = 'Modules\Ticketing\Emails\\' . $this->mailable;
-        Mail::to($this->event->user->email)->send(new $mailable($this->event->ticket));
+        SendEmail::dispatch($this->event, $mailable);
     }
 }
