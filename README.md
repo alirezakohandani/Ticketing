@@ -3,6 +3,7 @@
 How the ticketing module works is described below:
 1- Guest users can send a support ticket, receive a tracking code and register.
 http://test.com/api/v1/tickets
+
 method => POST
 | Parameters | Descriptions |
 | ------ | ------ |
@@ -13,14 +14,17 @@ method => POST
 
 2- Users can log in and track their tickets.
 http://test.com/api/v1/tickets
+
 method => GET
 
 3- Guest users can see the status of their ticket by sending a ref_number.
 http://test.com/api/v1/tickets/{ref_number}
+
 method => GET
 
 4- Login and receive jwt token
 http://test.com/api/v1/auth/login
+
 method => POST
 | Parameters | Descriptions |
 | ------ | ------ |
@@ -30,9 +34,11 @@ method => POST
 5- Admins who are permission to give ticket answers:
 - They can see a list of available tickets with pending status.
 http://test.com/api/v1/admin/tickets
+
 method => Get
 -They can change the type of ticket.
 http://test.com/api/v1/admin/ticket/change/type
+
 method => Put
 
 | Parameters | Descriptions |
@@ -41,17 +47,19 @@ method => Put
 | type | enum('immediate', 'normal', 'nonsignificant') |
 - They can record their follow-up on any ticket.
 http://test.com/api/v1/admin/tickets/{ref_number}/reply
+
 method => Post
 
 | Parameters | Descriptions |
 | ------ | ------ |
 | title | reply title | 
 | description | description |
--In addition, a notification email will be sent to these admins when they submit a new ticket
+- In addition, a notification email will be sent to these admins when they submit a new ticket
 
 6- Admins permissioned to close tickets:
 - They can close one of the tickets
 http://test.com/api/v1/admin/tickets/{ref_number}/close
+
 method => Post
 
 | Parameter | Description |
@@ -60,6 +68,7 @@ method => Post
 
 - They can see a list of available tickets with pending status.
 http://test.com/api/v1/admin/tickets
+
 method => Get
 
 ## Features
