@@ -18,3 +18,60 @@ method => GET
 3- Guest users can see the status of their ticket by sending a ref_number.
 http://test.com/api/v1/tickets/{ref_number}
 method => GET
+
+4- Login and receive jwt token
+http://test.com/api/v1/auth/login
+method => POST
+| Parameters | Descriptions |
+| ------ | ------ |
+| email | user email | 
+| password | user password |
+
+5- Admins who are permission to give ticket answers:
+- They can see a list of available tickets with pending status.
+http://test.com/api/v1/admin/tickets
+method => Get
+-They can change the type of ticket.
+http://test.com/api/v1/admin/ticket/change/type
+method => Put
+
+| Parameters | Descriptions |
+| ------ | ------ |
+| ref_number | ticket ref_number | 
+| type | enum('immediate', 'normal', 'nonsignificant') |
+- They can record their follow-up on any ticket.
+http://test.com/api/v1/admin/tickets/{ref_number}/reply
+method => Post
+
+| Parameters | Descriptions |
+| ------ | ------ |
+| title | reply title | 
+| description | description |
+-In addition, a notification email will be sent to these admins when they submit a new ticket
+
+6- Admins permissioned to close tickets:
+- They can close one of the tickets
+http://test.com/api/v1/admin/tickets/{ref_number}/close
+method => Post
+
+| Parameter | Description |
+| ------ | ------ |
+| status | ticket status | 
+
+- They can see a list of available tickets with pending status.
+http://test.com/api/v1/admin/tickets
+method => Get
+
+## Features
+- Artisan command to create the desired number of dummy tickets with random and different statuses for the software demo
+```sh
+php artisan ticket:create {number}
+```
+- Artisan command for unanswered tickets from the user for one day.
+```sh
+php artisan ticket:finish
+```
+- Automatic closing of tickets left unanswered by the user. (Daily)
+```sh
+php artisan schedule:work
+```
