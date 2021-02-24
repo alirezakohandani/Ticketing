@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "lcobucci/jwt": "3.3.3",
         "nwidart/laravel-modules": "^8.2",
+        "predis/predis": "^1.1",
         "tymon/jwt-auth": "^1"
     },
     "require-dev": {
