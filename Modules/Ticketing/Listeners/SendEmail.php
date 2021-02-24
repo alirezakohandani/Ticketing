@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 use Modules\Ticketing\Emails\TicketMail;
+use Modules\Ticketing\Services\Notification\Email;
 
 class SendEmail
 {
@@ -19,6 +20,7 @@ class SendEmail
      */
     public function handle(TicketCreated $event)
     {
-        Mail::to($event->user->email)->send(new TicketMail($event->ticket));
+        $email = new Email($event, 'TicketMail');
+        $email->send();
     }
 }
