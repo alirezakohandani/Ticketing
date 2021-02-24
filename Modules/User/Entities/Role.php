@@ -45,7 +45,7 @@ class Role extends Model
     /**
      * Create super admin role
      *
-     * @return void
+     * @return $this
      */
     public function createSuperAdminRole()
     {

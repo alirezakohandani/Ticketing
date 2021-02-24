@@ -59,7 +59,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Create super admin user
      *
-     * @return void
+     * @return $this
      */
     public function createSuperAdminUser()
     {
