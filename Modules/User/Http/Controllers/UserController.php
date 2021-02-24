@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\User\Entities\User;
+use Modules\User\Transformers\Admin\Errors\AdminIndexPermissionResource;
 use Modules\User\Transformers\UserCollection;
 
 class UserController extends Controller
@@ -25,6 +26,10 @@ class UserController extends Controller
 
     public function index()
     {
+        if(!auth()->user()->can('see users'))
+        {
+            return response()->json(new AdminIndexPermissionResource(auth()->user()));
+        }
         $users = User::with('roles')->paginate(10);
         return response()->json(new UserCollection($users));
     }
