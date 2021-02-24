@@ -43,7 +43,7 @@ class Ticket
                     event(new TicketCreated($ticket, $user));
                 }
             });
-            return $ticket->ref_number;
+            return $ticket;
     }
 
     /**

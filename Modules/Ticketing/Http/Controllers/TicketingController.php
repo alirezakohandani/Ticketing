@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Services\Ticket\Ticket;
+use Modules\Ticketing\Transformers\Front\TicketStoreResource;
 use Modules\Ticketing\Transformers\Front\TicketIndexCollection;
 
 class TicketingController extends Controller
@@ -36,11 +37,8 @@ class TicketingController extends Controller
      */
     public function store(Request $request)
     {
-       $ref_number = $this->ticket->store($request);
-       return response()->json([
-        'ref_number' => $ref_number,
-        'status' => 200,
-       ]); 
+       $ticket = $this->ticket->store($request);
+       return response()->json(new TicketStoreResource($ticket));
     }
 
     /**
