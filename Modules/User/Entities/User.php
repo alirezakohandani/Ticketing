@@ -55,6 +55,20 @@ class User extends Authenticatable implements JWTSubject
         $this->roles()->syncWithoutDetaching($role);
         return $this;
     }
+
+    /**
+     * Create super admin user
+     *
+     * @return void
+     */
+    public function createSuperAdminUser()
+    {
+        return $this->create([
+            'name' => 'superAdmin',
+            'email' => 'supperAdmin@test.com',
+            'password' => \Hash::make('password'),
+        ]);
+    }
     
      /**
      * Get the identifier that will be stored in the subject claim of the JWT.
