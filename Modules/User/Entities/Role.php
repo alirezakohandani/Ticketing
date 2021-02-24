@@ -11,6 +11,8 @@ class Role extends Model
 
     protected $fillable = ['role'];
 
+    public $timestamps = false;
+
     /**
      * The users that belong to the role
      */
@@ -38,6 +40,18 @@ class Role extends Model
         $permission = Permission::where('name', $permission)->get();
         $this->permissions()->syncWithoutDetaching($permission);
         return $this;
+    }
+
+    /**
+     * Create super admin role
+     *
+     * @return void
+     */
+    public function createSuperAdminRole()
+    {
+        return $this->create([
+            'role' => 'super_admin',
+        ]);
     }
 
     protected static function newFactory()
