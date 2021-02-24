@@ -43,7 +43,7 @@ class TicketFinishCommand extends Command
     {
         $tickets = Ticket::Where('created_at', '<', 
                                 Carbon::now()->subDay())
-                                             ->where('status', 'awserd')
+                                             ->where('status', 'anwserd')
                                              ->get();
         foreach($tickets as $ticket)
         {

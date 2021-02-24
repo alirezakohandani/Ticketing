@@ -4,6 +4,7 @@ namespace Modules\Ticketing\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Console\Scheduling\Schedule;
 
 class TicketingServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,11 @@ class TicketingServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('ticket:finish')->daily();
+        });
     }
 
     /**
