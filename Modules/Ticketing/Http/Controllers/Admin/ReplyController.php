@@ -28,7 +28,7 @@ class ReplyController extends Controller
      */
     public function store(Ticket $ticket,Request $request)
     {
-        if (!auth()->user()->can('response tickets')) 
+        if (!\Gate::any(['response tickets', 'super_admin'])) 
         {
             return response()->json(new TicketResource(auth()->user()));
         }
