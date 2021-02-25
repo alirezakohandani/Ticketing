@@ -57,6 +57,16 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Return all users
+     *
+     * @return users
+     */
+    public function getAllUsers()
+    {
+        return $this->orderBy('id')->get();
+    }
+
+    /**
      * Create super admin user
      *
      * @return $this
