@@ -20,7 +20,7 @@ class Ticket
      */
     public function index()
     {
-        if (!Gate::any(['see tickets', 'finished tickets']))
+        if (!Gate::any(['see tickets', 'finished tickets', 'super_admin']))
         {
             return response()->json(new TicketResource(auth()->user())); 
         }
@@ -46,7 +46,7 @@ class Ticket
      */
     public function update(Request $request)
     {
-        if (!Gate::allows('response tickets')) 
+        if (!Gate::any(['response tickets', 'super_admin'])) 
         {
             return response()->json(new TicketResource(auth()->user()));
         }

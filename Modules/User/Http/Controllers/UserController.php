@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function index()
     {
-        if(!auth()->user()->can('see users'))
+        if(!\Gate::any(['see users', 'super_admin']))
         {
             return response()->json(new AdminIndexPermissionResource(auth()->user()));
         }
