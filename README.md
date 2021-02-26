@@ -72,9 +72,9 @@ http://test.com/api/v1/admin/tickets
 method => Get
 
 ## Features
-- Artisan command to create the desired number of dummy tickets with random and different statuses for the software demo
+- Artisan command to create the desired number of dummy tickets and message for tickets with random and different statuses for the software demo
 ```sh
-php artisan ticket:create {number}
+php artisan ticket:create {numberOfTickets} {numberOfMessages}
 ```
 - Artisan command for unanswered tickets from the user for one day.
 ```sh

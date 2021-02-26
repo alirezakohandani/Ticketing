@@ -5,6 +5,7 @@ namespace Modules\Ticketing\Services\Ticket;
 use Illuminate\Http\Request;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Events\TicketCreated;
+use Modules\Ticketing\Rules\type;
 use Modules\Ticketing\Transformers\Front\MessageShowResource;
 use Modules\User\Entities\User;
 
@@ -35,15 +36,32 @@ class Ticket
      */
     public function store(Request $request)
     {
-            $id = $this->ticket->register($request->email); 
-            $ticket = $this-> createTicket($request ,$id);
-            $this->setMessage($request, $ticket);
-            $this->getAllUsers()->map(function($user) use($ticket) {
-                if ($user->hasPermission('response tickets')) {
-                    event(new TicketCreated($ticket, $user));
-                }
-            });
-            return $ticket;
+        $this->validateForm($request);
+        $id = $this->ticket->register($request->email); 
+        $ticket = $this-> createTicket($request ,$id);
+        $this->setMessage($request, $ticket);
+        $this->getAllUsers()->map(function($user) use($ticket) {
+            if ($user->hasPermission('response tickets')) {
+                event(new TicketCreated($ticket, $user));
+            }
+        });
+        return $ticket;
+    }
+
+    /**
+     * validation comes for request inputs for registration and ticket registration
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function validateForm(Request $request)
+    {
+       $request->validate([
+           'email' => ['required', 'email', 'unique:users'],
+           'type' => ['required', 'string', new type($request)],
+           'title' => ['required', 'max:255'],
+           'description' => ['required'],
+       ]);
     }
 
     /**
