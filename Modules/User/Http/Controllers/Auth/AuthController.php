@@ -25,6 +25,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $this->validateForm($request);
         $credentials = $request->only(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
@@ -35,6 +36,20 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+    
+    /**
+     * Request Validation for login
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function validateForm(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'exists:users'],
+            'password' => ['required']
+        ]);
     }
 
     /**

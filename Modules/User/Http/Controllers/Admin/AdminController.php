@@ -28,9 +28,24 @@ class AdminController extends Controller
      */
     public function storeRole(Request $request)
     {
+        $this->validateRole($request);
         $user = User::where('email', $request->email)->first();
         $user->assignRolesToUsers($request->role);
         return response()->json(new AdminStoreRoleResource($user));
+    }
+
+    /**
+     * Validation The role assigned to the user.
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function validateRole(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'exists:users'],
+            'role' => ['required', 'max:15'],
+        ]);
     }
 
     /**
@@ -41,9 +56,24 @@ class AdminController extends Controller
      */
     public function storePermission(Request $request)
     {
+        $this->validatePermission($request);
         $role = Role::where('role', $request->role)->first();
         $role->assignPermissionToRoles($request->permission);
         return response()->json(new AdminStorePermissionResource($role));
+    }
+
+    /**
+     * Validation permission is assigned to the role.
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function validatePermission(Request $request)
+    {
+        $request->validate([
+            'role' => ['required', 'exists:roles'],
+            'permission' => ['required', 'max:20'],
+        ]);
     }
 
 }
