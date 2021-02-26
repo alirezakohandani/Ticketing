@@ -4,6 +4,7 @@ namespace Modules\Ticketing\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Hash;
 use Modules\Ticketing\Traits\Createdat;
 use Modules\User\Entities\User;
 
@@ -48,9 +49,9 @@ class Ticket extends Model
     public function register($email)
     {
         $user = $this->user()->create([
-            'name' => 'test',
+            'name' => strtok($email, '@'),
             'email' => $email,
-            'password' => 123456,
+            'password' => Hash::make($email),
         ]);
         $user->roles()->attach(1);
         return $user->id;  
