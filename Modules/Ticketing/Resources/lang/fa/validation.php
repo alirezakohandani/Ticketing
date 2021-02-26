@@ -117,7 +117,7 @@ return [
     'uploaded'             => 'بارگذاری فایل :attribute موفقیت آمیز نبود.',
     'url'                  => ':attribute معتبر نمی‌باشد.',
     'uuid'                 => ':attribute باید یک UUID معتبر باشد.',
-
+    'developer_validation' => 'مشکلی هنگام ولیدیشن رخ داده است.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
