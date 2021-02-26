@@ -32,9 +32,24 @@ class ReplyController extends Controller
         {
             return response()->json(new TicketResource(auth()->user()));
         }
+        $this->validateForm($request);
         $message = $this->createMessage($ticket, $request);
         event(new ReplyCreated($message, auth()->user()));
         return response()->json(new ReplyResource($message));
+    }
+
+    /**
+     * validation to respond to tickets
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function validateForm(Request $request)
+    {
+        $request->validate([
+            'title' => ['required', 'max:255'],
+           'description' => ['required'],
+        ]);
     }
 
     /**

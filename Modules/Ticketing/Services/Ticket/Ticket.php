@@ -56,7 +56,7 @@ class Ticket
      */
     private function validateForm(Request $request)
     {
-       $request->validate([
+        $request->validate([
            'email' => ['required', 'email', 'unique:users'],
            'type' => ['required', 'string', new type($request)],
            'title' => ['required', 'max:255'],

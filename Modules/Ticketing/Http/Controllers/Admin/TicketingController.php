@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Events\TicketFinished;
+use Modules\Ticketing\Rules\Status;
 use Modules\Ticketing\Services\Ticket\Admin\Ticket;
 use Modules\Ticketing\Transformers\Admin\TicketFinishResource;
 
@@ -44,9 +45,23 @@ class TicketingController extends Controller
      * @param EntitiesTicket $ticket
      * @return json
      */
-    public function close(EntitiesTicket $ticket)
+    public function close(EntitiesTicket $ticket, Request $request)
     {
+        $this->validateForm($request);
         event(new TicketFinished($ticket));
         return response()->json(new TicketFinishResource($ticket));
+    }
+
+    /**
+     * Validation to close tickets
+     *
+     * @param Request $request
+     * @return void
+     */
+    private function validateForm(Request $request)
+    {
+        $request->validate([
+            'status' => ['required', 'string', new Status($request)],
+        ]);
     }
 }
