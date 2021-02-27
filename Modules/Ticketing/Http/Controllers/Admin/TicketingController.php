@@ -2,14 +2,15 @@
 
 namespace Modules\Ticketing\Http\Controllers\Admin;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Events\TicketFinished;
 use Modules\Ticketing\Rules\Status;
 use Modules\Ticketing\Services\Ticket\Admin\Ticket;
 use Modules\Ticketing\Transformers\Admin\TicketFinishResource;
+use Modules\Ticketing\Transformers\Errors\ValidationErrorResource;
 
 class TicketingController extends Controller
 {
@@ -47,21 +48,14 @@ class TicketingController extends Controller
      */
     public function close(EntitiesTicket $ticket, Request $request)
     {
-        $this->validateForm($request);
-        event(new TicketFinished($ticket));
-        return response()->json(new TicketFinishResource($ticket));
-    }
-
-    /**
-     * Validation to close tickets
-     *
-     * @param Request $request
-     * @return void
-     */
-    private function validateForm(Request $request)
-    {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'status' => ['required', 'string', new Status($request)],
         ]);
+        if (!$validator->fails()) {
+            event(new TicketFinished($ticket));
+            return response()->json(new TicketFinishResource($ticket));
+        }
+            return response()->json(new ValidationErrorResource($validator->errors()->first()));
     }
+
 }
