@@ -26,7 +26,7 @@ class ticketChangeStatus
      */
     public function handle(ReplyCreated $event)
     {
-        if ($event->user->hasPermission('response tickets')) 
+        if (\Gate::any(['response tickets', 'super_admin'])) 
         {
           $event->message->ticket->replied();  
         }
