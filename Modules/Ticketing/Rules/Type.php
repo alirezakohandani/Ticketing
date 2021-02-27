@@ -44,9 +44,6 @@ class type implements Rule
      */
     public function message()
     {
-        return response()->json([
-            'status' => 400,
-            'userMessage' => trans('ticketing::errors.type_enum'),
-        ]);
+        return trans('ticketing::validation.type_enum');
     }
 }

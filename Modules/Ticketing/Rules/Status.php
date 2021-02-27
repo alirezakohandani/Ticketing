@@ -34,6 +34,7 @@ class Status implements Rule
      */
     public function passes($attribute, $value)
     {
+
         $whiteList = ['pending', 'anwserd', 'finished'];
         return in_array($this->status, $whiteList);
     }
@@ -45,9 +46,6 @@ class Status implements Rule
      */
     public function message()
     {
-        return response()->json([
-            'status' => 400,
-            'userMessage' => trans('ticketing::errors.status_enum'),
-        ]);
+        return trans('ticketing::validation.status_enum');
     }
 }
