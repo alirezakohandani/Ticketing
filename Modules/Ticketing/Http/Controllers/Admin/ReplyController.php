@@ -5,10 +5,12 @@ namespace Modules\Ticketing\Http\Controllers\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use Modules\Ticketing\Entities\Ticket;
 use Modules\Ticketing\Events\ReplyCreated;
 use Modules\Ticketing\Transformers\Admin\Errors\TicketResource;
 use Modules\Ticketing\Transformers\Admin\Reply\ReplyResource;
+use Modules\Ticketing\Transformers\Errors\ValidationErrorResource;
 
 class ReplyController extends Controller
 {
@@ -32,10 +34,13 @@ class ReplyController extends Controller
         {
             return response()->json(new TicketResource(auth()->user()));
         }
-        $this->validateForm($request);
-        $message = $this->createMessage($ticket, $request);
-        event(new ReplyCreated($message, auth()->user()));
-        return response()->json(new ReplyResource($message));
+        $validator = $this->validateForm($request);
+        if (!$validator->fails()) {
+            $message = $this->createMessage($ticket, $request);
+            event(new ReplyCreated($message, auth()->user()));
+            return response()->json(new ReplyResource($message));
+        }
+        return response()->json(new ValidationErrorResource($validator->errors()->first()));    
     }
 
     /**
@@ -46,7 +51,7 @@ class ReplyController extends Controller
      */
     private function validateForm(Request $request)
     {
-        $request->validate([
+        return Validator::make($request->all(), [
             'title' => ['required', 'max:255'],
            'description' => ['required'],
         ]);

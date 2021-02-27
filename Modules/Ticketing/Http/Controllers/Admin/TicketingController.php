@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Events\TicketFinished;
 use Modules\Ticketing\Rules\Status;
+use Modules\Ticketing\Rules\type;
 use Modules\Ticketing\Services\Ticket\Admin\Ticket;
 use Modules\Ticketing\Transformers\Admin\TicketFinishResource;
 use Modules\Ticketing\Transformers\Errors\ValidationErrorResource;
@@ -37,7 +38,14 @@ class TicketingController extends Controller
      */
     public function update(Request $request)
     {
-        return $this->ticket->update($request);
+        $validator = Validator::make($request->all(), [
+            'ref_number' => ['required', 'integer', 'exists:tickets'],
+            'type' => ['required', 'string', new type($request)],
+        ]);
+        if (!$validator->fails()) {
+            return $this->ticket->update($request);
+        }
+            return response()->json(new ValidationErrorResource($validator->errors()->first())); 
     }
 
     /**

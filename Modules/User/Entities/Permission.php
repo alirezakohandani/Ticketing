@@ -10,6 +10,8 @@ class Permission extends Model
     use HasFactory;
 
     protected $fillable = [];
+
+    public $timestamps = false;
     
     /**
      * the roles that belong to the permission
