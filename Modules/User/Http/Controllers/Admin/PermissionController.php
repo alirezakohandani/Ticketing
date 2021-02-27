@@ -20,8 +20,9 @@ class PermissionController extends Controller
     {
         $this->middleware('auth:api');
     }
-   /**
-     * Attribute the permission to the role
+
+    /**
+     * Assign the permission to the role
      *
      * @param Request $request
      * @return json
