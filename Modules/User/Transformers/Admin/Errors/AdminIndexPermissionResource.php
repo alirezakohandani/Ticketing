@@ -23,7 +23,7 @@ class AdminIndexPermissionResource extends JsonResource
                 'name' => $this->name,
                 'email' => $this->email,
                 'role' => $this->roles->map(function($role) {
-                    return $role->role;
+                    return $role->p_role;
                 }),
             ],
         ];
