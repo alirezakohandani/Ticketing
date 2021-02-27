@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Modules\User\Http\Controllers\Admin\AdminController;
+use Modules\User\Http\Controllers\Admin\RoleController;
 use Modules\User\Http\Controllers\Auth\AuthController;
 use Modules\User\Http\Controllers\UserController;
 
@@ -25,6 +26,6 @@ Route::group(['prefix' => 'v1'], function() {
 }); 
 
 Route::group(['prefix' => 'v1/admin'], function() {
-    Route::post('/add/role', [AdminController::class, 'storeRole']);
+    Route::post('/add/role', [RoleController::class, 'store']);
     Route::post('/add/permission', [AdminController::class, 'storePermission']);
 });
