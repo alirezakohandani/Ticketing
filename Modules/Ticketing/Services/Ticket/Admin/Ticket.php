@@ -50,7 +50,6 @@ class Ticket
         {
             return response()->json(new TicketResource(auth()->user()));
         }
-        $this->validation($request);
         $ticket = $this->getTicket($request->ref_number); 
         $ticket = $ticket->update([
             'type' => $request->type,
@@ -58,19 +57,6 @@ class Ticket
         return response()->json(new TicketUpdateResource($ticket));
     }
 
-    /**
-     * Request Validation
-     *
-     * @param Request $request
-     * @return void
-     */
-    private function validation(Request $request)
-    {
-        $request->validate([
-            'ref_number' => ['required:api', 'integer:api'],
-            'type' => ['required:api', 'string:api', new type($request)],
-        ]);
-    }
     /**
      * Returns specific ticket based on ref_number
      *
