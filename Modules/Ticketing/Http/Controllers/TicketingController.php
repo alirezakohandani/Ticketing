@@ -16,15 +16,27 @@ use Modules\Ticketing\Transformers\Front\TicketIndexCollection;
 class TicketingController extends Controller
 {
 
+    /**
+     * ticket variable
+     *
+     * @var [type]
+     */
     private $ticket;
 
+    /**
+     * Create a new event instance of ticket.
+     *
+     * @param Ticket $ticket
+     */
     public function __construct(Ticket $ticket)
     {
         $this->ticket = $ticket;
     }
+
     /**
      * Display a listing of the tickets for logged in users.
-     * @return Renderable
+     * 
+     * @return json
      */
     public function index()
     {
@@ -36,7 +48,7 @@ class TicketingController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+     * @return json
      */
     public function store(Request $request)
     {
@@ -69,11 +81,10 @@ class TicketingController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Renderable
+     * @return json
      */
     public function show(EntitiesTicket $ticket)
     {
         return $this->ticket->show($ticket);
     }
-  
 }

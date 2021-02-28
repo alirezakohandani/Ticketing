@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Event;
 use Modules\Ticketing\Events\ReplyCreated;
 use Modules\Ticketing\Events\TicketCreated;
 use Modules\Ticketing\Events\TicketFinished;
+use Modules\Ticketing\Events\User\FollowCreated;
 use Modules\Ticketing\Listeners\SendEmail;
 use Modules\Ticketing\Listeners\ticketChangeStatus;
 use Modules\Ticketing\Listeners\ticketFinishedStatus;
+use Modules\Ticketing\Listeners\User\TicketChangeStatus as UserTicketChangeStatus;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         TicketFinished::class => [
             ticketFinishedStatus::class,
+        ],
+        FollowCreated::class => [
+            UserTicketChangeStatus::class,
         ],
     ];
 
