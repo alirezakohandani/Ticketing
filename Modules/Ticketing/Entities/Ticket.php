@@ -68,6 +68,17 @@ class Ticket extends Model
         $this->save();
     }
 
+     /**
+     * Change status by the user
+     *
+     * @return void
+     */
+    public function followed()
+    {
+        $this->status = 'pending';
+        $this->save();
+    }
+
     /**
      * Finish status
      *
