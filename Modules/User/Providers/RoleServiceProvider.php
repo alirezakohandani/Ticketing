@@ -9,15 +9,10 @@ use Modules\User\Entities\Role;
 class RoleServiceProvider extends ServiceProvider
 {
     /**
-     * Register the service provider.
+     * Checks that the user has the necessary roles.
      *
-     * @return void
+     * @return boolean
      */
-    public function register()
-    {
-        //
-    }
-
     public function boot()
     {
         $roles = Role::all();

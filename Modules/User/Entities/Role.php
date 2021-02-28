@@ -51,6 +51,7 @@ class Role extends Model
     {
         return $this->create([
             'role' => 'super_admin',
+            'p_role' => 'سوپر ادمین'
         ]);
     }
 

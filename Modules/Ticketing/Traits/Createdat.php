@@ -3,7 +3,7 @@
 namespace Modules\Ticketing\Traits;
 
 
-trait Createdat
+trait CreatedAt
 {
     public function getCreatedAttribute()
     {
