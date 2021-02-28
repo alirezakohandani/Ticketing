@@ -5,6 +5,11 @@ namespace Modules\User\Http\Controllers\Auth;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
+use Modules\User\Transformers\Auth\LoginFailedResource;
+use Modules\User\Transformers\Auth\LoginResource;
+use Modules\User\Transformers\Auth\LogoutResource;
+use Modules\User\Transformers\Errors\ValidationErrorResource;
 
 class AuthController extends Controller
 {
@@ -25,17 +30,16 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validateForm($request);
-        $credentials = $request->only(['email', 'password']);
-
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json([
-                "status" => 400,
-                "developerMessage" => trans('user::errors.username_password_wrong'),
-            ]);
+        $validator = $this->validateForm($request);
+        if ($validator->fails()) {
+            return response()->json(new ValidationErrorResource($validator->errors()->first()));
         }
 
-        return $this->respondWithToken($token);
+        $credentials = $request->only(['email', 'password']);
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(new LoginFailedResource($token));
+        }
+            return $this->respondWithToken($token);
     }
     
     /**
@@ -46,7 +50,7 @@ class AuthController extends Controller
      */
     private function validateForm(Request $request)
     {
-        $request->validate([
+        return Validator::make($request->all(), [
             'email' => ['required', 'email', 'exists:users'],
             'password' => ['required']
         ]);
@@ -59,12 +63,9 @@ class AuthController extends Controller
      */
     public function logout()
     {
+        $user = auth()->user();
         auth()->logout();
-
-        return response()->json([
-            'status' => 200,
-            'message' => trans('user::successes.logged_out'),
-            ]);
+        return response()->json(new LogoutResource($user));
     }
 
     /**
@@ -76,11 +77,6 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
-            'token' => [
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            ],
-        ]);
+        return response()->json(new LoginResource($token));
     }
 }
