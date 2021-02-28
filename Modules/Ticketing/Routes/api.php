@@ -18,7 +18,7 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/tickets.json', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'index']);
     Route::post('/tickets', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'store']);
     Route::get('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'show']); 
-    Route::post('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'followUp']);
+    Route::post('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\ReplyController::class, 'followUp']);
 });
 
 Route::group(['prefix' => 'v1/admin'], function () { 

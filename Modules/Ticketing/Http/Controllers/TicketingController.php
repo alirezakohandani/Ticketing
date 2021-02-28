@@ -7,27 +7,36 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
-use Modules\Ticketing\Events\User\FollowCreated;
 use Modules\Ticketing\Rules\type;
 use Modules\Ticketing\Services\Ticket\Ticket;
 use Modules\Ticketing\Transformers\Errors\ValidationErrorResource;
-use Modules\Ticketing\Transformers\Front\FollowUpResource;
 use Modules\Ticketing\Transformers\Front\TicketStoreResource;
 use Modules\Ticketing\Transformers\Front\TicketIndexCollection;
 
 class TicketingController extends Controller
 {
 
+    /**
+     * ticket variable
+     *
+     * @var [type]
+     */
     private $ticket;
 
+    /**
+     * Create a new event instance of ticket.
+     *
+     * @param Ticket $ticket
+     */
     public function __construct(Ticket $ticket)
     {
         $this->ticket = $ticket;
-        $this->middleware('auth:api')->only('followUp');
     }
+
     /**
      * Display a listing of the tickets for logged in users.
-     * @return Renderable
+     * 
+     * @return json
      */
     public function index()
     {
@@ -39,7 +48,7 @@ class TicketingController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param Request $request
-     * @return Renderable
+     * @return json
      */
     public function store(Request $request)
     {
@@ -72,44 +81,10 @@ class TicketingController extends Controller
     /**
      * Show the specified resource.
      * @param int $id
-     * @return Renderable
+     * @return json
      */
     public function show(EntitiesTicket $ticket)
     {
         return $this->ticket->show($ticket);
     }
-
-    /**
-     * The ticket is followed by the user
-     *
-     * @param EntitiesTicket $ticket
-     * @param Request $request
-     * @return void
-     */
-    public function followUp(EntitiesTicket $ticket, Request $request)
-    {
-        $user = auth()->user();
-        if ($ticket->user->id == $user->id) {
-            $message = $this->createMessage($ticket, $request);
-            event(new FollowCreated($message, $user));
-            return response()->json(new FollowUpResource($message));
-        }
-    }
-
-    /**
-     * Create message for follow up
-     *
-     * @param Ticket $ticket
-     * @param Request $request
-     * @return Modules\Ticketing\Entities\Message
-     */
-    private function createMessage(EntitiesTicket $ticket, $request)
-    {
-        return $ticket->messages()->create([
-            'user_id' => auth()->user()->id,
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
-    }
-  
 }
