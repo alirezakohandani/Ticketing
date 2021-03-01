@@ -16,8 +16,8 @@ class TicketResource extends JsonResource
     {
         return [
             'status' => 400,
-            "developerMessage" => trans('ticketing::errors.dont_permission'),
-            "userMessage" => trans('ticketing::errors.permission'),
+            "developerMessage" => trans('ticketing::errors.developer_dont_permission'),
+            "userMessage" => trans('ticketing::user_dont_permission'),
             "errorCode" => "444444",
             'user' => [
                 'name' => $this->name,
