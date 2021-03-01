@@ -16,14 +16,14 @@ class TicketResource extends JsonResource
     {
         return [
             'status' => 400,
-            "developerMessage" => "dont permission",
-            "userMessage" => trans('Ticketing:errors.permission'),
+            "developerMessage" => trans('ticketing::errors.dont_permission'),
+            "userMessage" => trans('ticketing::errors.permission'),
             "errorCode" => "444444",
             'user' => [
                 'name' => $this->name,
                 'email' => $this->email,
                 'role' => $this->roles->map(function($role) {
-                    return $role->role;
+                    return $role->p_role;
                 }),
             ],
         ];

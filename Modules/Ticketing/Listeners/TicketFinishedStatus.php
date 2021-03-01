@@ -16,9 +16,6 @@ class ticketFinishedStatus
      */
     public function handle(TicketFinished $event)
     {
-        if (\Gate::any(['close tickets', 'super_admin']))
-        {
-            $event->ticket->finishedStatus();
-        }
+        $event->ticket->finishedStatus();
     }
 }
