@@ -3,7 +3,7 @@
 use Modules\User\Http\Controllers\Admin\PermissionController;
 use Modules\User\Http\Controllers\Admin\RoleController;
 use Modules\User\Http\Controllers\Auth\AuthController;
-use Modules\User\Http\Controllers\UserController;
+use Modules\User\Http\Controllers\Front\UserController;
 
 /*
 |--------------------------------------------------------------------------

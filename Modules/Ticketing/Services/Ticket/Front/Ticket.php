@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Ticketing\Services\Ticket;
+namespace Modules\Ticketing\Services\Ticket\Front;
 
 use Illuminate\Http\Request;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;

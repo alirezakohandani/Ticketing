@@ -15,10 +15,10 @@ use Modules\Ticketing\Http\Controllers\Admin\ReplyController;
 */
 
 Route::group(['prefix' => 'v1'], function () { 
-    Route::get('/tickets.json', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'index']);
-    Route::post('/tickets', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'store']);
-    Route::get('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\TicketingController::class, 'show']); 
-    Route::post('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\ReplyController::class, 'followUp']);
+    Route::get('/tickets.json', [Modules\Ticketing\Http\Controllers\Front\TicketingController::class, 'index']);
+    Route::post('/tickets', [Modules\Ticketing\Http\Controllers\Front\TicketingController::class, 'store']);
+    Route::get('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\Front\TicketingController::class, 'show']); 
+    Route::post('/tickets/{ticket:ref_number}', [Modules\Ticketing\Http\Controllers\Front\ReplyController::class, 'followUp']);
 });
 
 Route::group(['prefix' => 'v1/admin'], function () { 
