@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Rules\type;
-use Modules\Ticketing\Services\Ticket\Ticket;
+use Modules\Ticketing\Services\Ticket\Front\Ticket;
 use Modules\Ticketing\Transformers\Errors\ValidationErrorResource;
 use Modules\Ticketing\Transformers\Front\TicketStoreResource;
 use Modules\Ticketing\Transformers\Front\TicketIndexCollection;
