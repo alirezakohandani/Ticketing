@@ -15,14 +15,19 @@ class TicketFinishResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'ticket' => [
-                'ref_number' => $this->ref_number,
-                'title' => $this->messages()->first()->title,
-                'created_at' => $this->created,
-            ],
-            'status' => 200,
-            'developerMessage' => 'ticket finished',
-            'userMessage' => trans('Ticketing:ticket_finish'),
+            "results" => [
+                [
+            "ticket" => [
+                            [ 
+                    'ref_number' => $this->ref_number,
+                    'title' => $this->messages()->first()->title,
+                    'created_at' => $this->created, 
+                            ],
+                    ],
+                    'userMessage' => trans('ticketing::errors.user_ticket_finish'),
+                ]
+    
+            ]
         ];
     }
 }

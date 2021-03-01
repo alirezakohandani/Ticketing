@@ -5,7 +5,6 @@ namespace Modules\Ticketing\Services\Ticket;
 use Illuminate\Http\Request;
 use Modules\Ticketing\Entities\Ticket as EntitiesTicket;
 use Modules\Ticketing\Events\TicketCreated;
-use Modules\Ticketing\Transformers\Front\MessageShowResource;
 use Modules\User\Entities\User;
 
 
@@ -104,26 +103,4 @@ class Ticket
 
         return $ref_number; 
     }   
-
-    /**
-     * Show ticket status by sending a ref_number
-     *
-     * @param EntitiesTicket $ticket
-     * @return json
-     */
-    public function show(EntitiesTicket $ticket)
-    {
-        $messages = $ticket->messages()->skip(1)->take(count($ticket->messages))->get();
-        
-        return response()->json([
-            'results' => [
-            'owner' => $ticket->user->name,    
-            'ref_number' => $ticket->ref_number,
-            'title' => $ticket->messages()->first()->title,
-            'description' => $ticket->messages()->first()->description,
-            'messages' => MessageShowResource::collection($messages),
-            ],
-        ]);
-    }
-
 }

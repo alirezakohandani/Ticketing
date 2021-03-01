@@ -10,6 +10,7 @@ use Modules\Ticketing\Events\TicketFinished;
 use Modules\Ticketing\Rules\Status;
 use Modules\Ticketing\Rules\type;
 use Modules\Ticketing\Services\Ticket\Admin\Ticket;
+use Modules\Ticketing\Transformers\Admin\Errors\TicketResource;
 use Modules\Ticketing\Transformers\Admin\TicketFinishResource;
 use Modules\Ticketing\Transformers\Errors\ValidationErrorResource;
 
@@ -56,6 +57,10 @@ class TicketingController extends Controller
      */
     public function close(EntitiesTicket $ticket, Request $request)
     {
+        if (!\Gate::any(['close tickets', 'super_admin']))
+        {
+            return response()->json(new TicketResource(auth()->user()));
+        }
         $validator = Validator::make($request->all(), [
             'status' => ['required', 'string', new Status($request)],
         ]);
