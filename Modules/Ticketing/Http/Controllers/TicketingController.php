@@ -12,6 +12,7 @@ use Modules\Ticketing\Services\Ticket\Ticket;
 use Modules\Ticketing\Transformers\Errors\ValidationErrorResource;
 use Modules\Ticketing\Transformers\Front\TicketStoreResource;
 use Modules\Ticketing\Transformers\Front\TicketIndexCollection;
+use Modules\Ticketing\Transformers\Front\TicketShowResource;
 
 class TicketingController extends Controller
 {
@@ -85,6 +86,6 @@ class TicketingController extends Controller
      */
     public function show(EntitiesTicket $ticket)
     {
-        return $this->ticket->show($ticket);
+        return response()->json(new TicketShowResource($ticket));
     }
 }
