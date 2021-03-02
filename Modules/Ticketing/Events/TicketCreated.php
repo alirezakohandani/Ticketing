@@ -21,6 +21,11 @@ class TicketCreated
     public $user;
 
     /**
+     * Mailable variable
+     */
+    public $mailable = 'TicketMail';
+
+    /**
      * Create a new event instance.
      *
      * @return void

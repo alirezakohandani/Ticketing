@@ -20,7 +20,7 @@ class SendEmail
      */
     public function handle(TicketCreated $event)
     {
-        $email = new Email($event, 'TicketMail');
+        $email = new Email($event, $event->mailable);
         $email->send();
     }
 }
