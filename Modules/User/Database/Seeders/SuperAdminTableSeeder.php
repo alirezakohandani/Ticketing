@@ -3,10 +3,11 @@
 namespace Modules\User\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Modules\User\Entities\User;
+use Illuminate\Database\Eloquent\Model;
 use Modules\User\Entities\Role;
+use Modules\User\Entities\User;
 
-class UserDatabaseSeeder extends Seeder
+class SuperAdminTableSeeder extends Seeder
 {
     /**
      * User variable
@@ -45,5 +46,4 @@ class UserDatabaseSeeder extends Seeder
         $role = $this->role->createSuperAdminRole();
         $user->roles()->attach($role);
     }
-    
 }
